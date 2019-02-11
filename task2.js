@@ -1,15 +1,9 @@
 class product {
     constructor(name, quant) {
-        this.setName(name);
-        this.setQuantity(quant);
+        this.nameOfProduct = name;
+        this.quantity = quant;
     }
-    setName(value) {
-        this.name = value;
-    }
-    getName() {
-        return this.name;
 
-    }
     setQuantity(value) {
         this.quantity = value;
     }
@@ -19,20 +13,15 @@ class product {
 }
 
 class productMaker {
-    constructor() {
-        this.remainder = 0;
-        this.products = [];
-        this.quantityOfProduct = [];
+    makeProduct() {
+        this.quantityOfProduct = Math.round(Math.random() * 100) + 50;
+        this.products = new product('Dirol', this.quantityOfProduct);
     }
-    makeProduct(day) {
-        this.quantityOfProduct[day] = Math.round(Math.random() * 100) + 50;
-        this.products[day] = new product('Dirol', this.quantityOfProduct);
+    setSentProduct(value) {
+        this.sentProduct = value;
     }
-    setSentProduct(day, value) {
-        this.sentProduct[day] = value;
-    }
-    getSentProduct(day) {
-        return this.sentProduct[day];
+    getSentProduct() {
+        return this.sentProduct;
     }
     /*
     setRemainder(value) {  //остаток после доставок товара
@@ -45,14 +34,11 @@ class productMaker {
 }
 
 class consumer {
-    constructor() {
-        this.needsProduct = [];
+    needProduct() {
+        this.needsProduct = Math.round(Math.random() * 50) + 70;
     }
-    needProduct(day) {
-        this.needsProduct[day] = Math.round(Math.random() * 50) + 70;
-    }
-    getNeedsProduct(day) {
-        return this.needsProduct[day];
+    getNeedsProduct() {
+        return this.needsProduct;
     }
     setRecievedProduct(value) {
         this.recievedProduct = value;
@@ -62,23 +48,21 @@ class consumer {
 class middleMan {
     constructor() {
         this.maximumOfProducts = 100;
-        this.recievedProduct = [];
+        //this.sentProduct = 0;
     }
-    delivery(day, products, needProducts, changeProducts, changeNeeds) {
+    delivery(products, needProducts, changeProducts, changeNeeds) {
         if (needProducts < this.maximumOfProducts) {
             if (products > needProducts) {
                 //delivery needproducts
                 changeProducts.setSentProduct(needProducts);
-                changeProducts.setRemainder(products - needProducts);
                 changeNeeds.setRecievedProduct(needProducts);
-                this.recievedProduct[day] = needProducts;
+                this.sentProduct = needProducts;
             }
             else {
                 //delivery products
                 changeProducts.setSentProduct(products);
-                changeProducts.setRemainder(0);
                 changeNeeds.setRecievedProduct(products);
-                this.recievedProduct[day] = products;
+                this.sentProduct = products;
             }
         }
         else {
@@ -86,24 +70,27 @@ class middleMan {
                 if (products >= this.maximumOfProducts) {
                     //delivery 100
                     changeProducts.setSentProduct(this.maximumOfProducts);
-                    changeProducts.setRemainder(products - this.maximumOfProducts);
                     changeNeeds.setRecievedProduct(this.maximumOfProducts);
-                    this.recievedProduct[day] = this.maximumOfProducts;
+                    this.sentProduct = this.maximumOfProducts;
                 }
                 else {
                     //delivery products
                     changeProducts.setSentProduct(products);
-                    changeProducts.setRemainder(0);
                     changeNeeds.setRecievedProduct(products);
-                    this.recievedProduct[day] = products;
+                    this.sentProduct = products;
 
                 }
+            }
+            else {
+                changeProducts.setSentProduct(this.maximumOfProducts);
+                changeNeeds.setRecievedProduct(this.maximumOfProducts);
+                this.sentProduct = this.maximumOfProducts;
             }
         }
     }
 
-    getRecievedProduct(day) {
-        return this.recievedProduct[day];
+    getSentProduct() {
+        return this.sentProduct;
     }
 }
 
@@ -111,21 +98,37 @@ class middleMan {
 var director = new productMaker;
 var buyer = new consumer;
 var midMan = new middleMan;
-var makedProductOf3Days = 0, sentProductOf3Days = 0, efficiency = 0;
+var makedProductOf3Days = 0, sentProductOf3Days = 0, efficiency = 0, makedProduct = [], sentProduct = [];
 
-
+console.log('Кол-во товара  Кол-во необх. товара  Кол-во доставленно товара за день  Кол-во произвед. товара за посл. 3 дня  Кол-во достав. товара за посл. 3 дня  КПД посредника ');
 for (var i = 1; i <= 10; i++) {
-    director.makeProduct(i);
-    buyer.needProduct(i);
-    midMan.delivery(i, director.quantityOfProduct, buyer.getNeedsProduct(i), director, buyer);
+    director.makeProduct();
+    buyer.needProduct();
+    midMan.delivery(director.products.getQuantity(), buyer.getNeedsProduct(), director, buyer);
+    /*
     if (i > 7) {
-        makedProductOf3Days = makedProductOf3Days + director.products[i].getQuantity();
-        sentProductOf3Days = recievedProductOf3Days + director.getSentProduct(i);
-        efficiency = efficiency + midMan.getRecievedProduct(i);
+        makedProductOf3Days = makedProductOf3Days + director.products.getQuantity();
+        sentProductOf3Days = sentProductOf3Days + director.getSentProduct();
     }
+    */
+    makedProduct[i] = director.products.getQuantity();
+    sentProduct[i] = director.getSentProduct();
+    if (i > 2) {
+        makedProductOf3Days = makedProduct[i] + makedProduct[i - 1] + makedProduct[i - 2];
+        sentProductOf3Days = sentProduct[i] + sentProduct[i - 1] + sentProduct[i - 2];
+    } else 
+    if (makedProduct[2] == undefined) {
+        makedProductOf3Days = makedProduct[1];
+        sentProductOf3Days = sentProduct[1];
+    } else {
+        makedProductOf3Days = makedProduct[1] + makedProduct[2];
+        sentProductOf3Days = sentProduct[1] + sentProduct[2];
+    }
+    efficiency = midMan.getSentProduct() / 100;
+    console.log(director.products.getQuantity(), buyer.getNeedsProduct(), midMan.getSentProduct(), makedProductOf3Days, sentProductOf3Days, efficiency);
 }
-efficiency = efficiency / 10;
-//console.log(buyer.getNeedsProduct());
+//efficiency = efficiency / 10;
+//console.log(efficiency);
 
 /*
 var producer=new productMaker();
