@@ -17,6 +17,9 @@ class productMaker {
         this.quantityOfProduct = Math.round(Math.random() * 100) + 50;
         this.products = new product('Dirol', this.quantityOfProduct);
     }
+    getQuantity() {
+        return this.quantityOfProduct;
+    }
     setSentProduct(value) {
         this.sentProduct = value;
     }
@@ -104,7 +107,7 @@ console.log('Кол-во товара  Кол-во необх. товара  К�
 for (var i = 1; i <= 10; i++) {
     director.makeProduct();
     buyer.needProduct();
-    midMan.delivery(director.products.getQuantity(), buyer.getNeedsProduct(), director, buyer);
+    midMan.delivery(director.getQuantity(), buyer.getNeedsProduct(), director, buyer);
     /*
     if (i > 7) {
         makedProductOf3Days = makedProductOf3Days + director.products.getQuantity();
@@ -125,7 +128,7 @@ for (var i = 1; i <= 10; i++) {
         sentProductOf3Days = sentProduct[1] + sentProduct[2];
     }
     efficiency = midMan.getSentProduct() / 100;
-    console.log(director.products.getQuantity(), buyer.getNeedsProduct(), midMan.getSentProduct(), makedProductOf3Days, sentProductOf3Days, efficiency);
+    console.log(director.getQuantity(), buyer.getNeedsProduct(), midMan.getSentProduct(), makedProductOf3Days, sentProductOf3Days, efficiency);
 }
 //efficiency = efficiency / 10;
 //console.log(efficiency);
