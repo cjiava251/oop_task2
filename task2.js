@@ -26,14 +26,6 @@ class productMaker {
     getSentProduct() {
         return this.sentProduct;
     }
-    /*
-    setRemainder(value) {  //остаток после доставок товара
-        this.remainder = this.remainder + value;
-    }
-    getRemainder() {
-        return this.remainder;
-    }
-    */
 }
 
 class consumer {
@@ -51,7 +43,6 @@ class consumer {
 class middleMan {
     constructor() {
         this.maximumOfProducts = 100;
-        //this.sentProduct = 0;
     }
     delivery(products, needProducts, changeProducts, changeNeeds) {
         if (needProducts < this.maximumOfProducts) {
@@ -108,12 +99,6 @@ for (var i = 1; i <= 10; i++) {
     director.makeProduct();
     buyer.needProduct();
     midMan.delivery(director.getQuantity(), buyer.getNeedsProduct(), director, buyer);
-    /*
-    if (i > 7) {
-        makedProductOf3Days = makedProductOf3Days + director.products.getQuantity();
-        sentProductOf3Days = sentProductOf3Days + director.getSentProduct();
-    }
-    */
     makedProduct[i] = director.products.getQuantity();
     sentProduct[i] = director.getSentProduct();
     if (i > 2) {
@@ -130,13 +115,3 @@ for (var i = 1; i <= 10; i++) {
     efficiency = midMan.getSentProduct() / 100;
     console.log(director.getQuantity(), buyer.getNeedsProduct(), midMan.getSentProduct(), makedProductOf3Days, sentProductOf3Days, efficiency);
 }
-//efficiency = efficiency / 10;
-//console.log(efficiency);
-
-/*
-var producer=new productMaker();
-producer.makeProduct();
-var kol=producer.getQuantityOfProduct();
-console.log(kol);
-
-*/
