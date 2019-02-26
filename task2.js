@@ -26,73 +26,54 @@ Product.prototype.getQuantity = function () {
 }
 
 
-var ProductMaker=function() {
+var ProductMaker = function () {
     this.quantityOfProduct;
     this.products;
 }
-ProductMaker.prototype.makeProduct=function() {
+ProductMaker.prototype.makeProduct = function () {
     this.quantityOfProduct = Math.round(Math.random() * 100) + 50;
     this.products = new Product('Dirol', this.quantityOfProduct);
 };
-ProductMaker.prototype.getQuantity=function() {
+ProductMaker.prototype.getQuantity = function () {
     return this.quantityOfProduct;
 };
-ProductMaker.prototype.setSentProduct=function(value) {
-    this.sentProduct=value;
+ProductMaker.prototype.setSentProduct = function (value) {
+    this.sentProduct = value;
 };
-ProductMaker.prototype.getSentProduct=function() {
+ProductMaker.prototype.getSentProduct = function () {
     return this.sentProduct;
 };
 
 
-var Consumer=function() {
+var Consumer = function () {
     this.needsProduct;
     this.recievedProduct;
 }
-Consumer.prototype.needProduct=function() {
-    this.needsProduct=Math.round(Math.random()*50)+70;
+Consumer.prototype.needProduct = function () {
+    this.needsProduct = Math.round(Math.random() * 50) + 70;
 };
-Consumer.prototype.getNeedsProduct=function() {
+Consumer.prototype.getNeedsProduct = function () {
     return this.needsProduct;
 };
-Consumer.prototype.setRecievedProduct=function(value) {
-    this.recievedProduct=value;
+Consumer.prototype.setRecievedProduct = function (value) {
+    this.recievedProduct = value;
 };
 
-var MiddleMan=function() {
-    this.maximumOfProducts=100;
+var MiddleMan = function () {
+    this.maximumOfProducts = 100;
     this.sentProduct;
 }
 //MiddleMan.prototype=ProductMaker;
-MiddleMan.prototype.deliveryProducts=function(products, needProducts, changeProducts, changeNeeds) {
-    if (needProducts < this.maximumOfProducts) {
-        if (products > needProducts) {
-            //delivery needproducts
-            delivery(changeProducts,changeNeeds,needProducts);
-        }
-        else {
-            //delivery products
-            delivery(changeProducts,changeNeeds,products);
-        }
-    }
-    else {
-        if (products < needProducts) {
-            if (products >= this.maximumOfProducts) {
-                //delivery 100
-                delivery(changeProducts,changeNeeds,this.maximumOfProducts);
-            }
-            else {
-                //delivery products
-                delivery(changeProducts,changeNeeds,products);
-            }
-        }
-        else {
-            delivery(changeProducts,changeNeeds,this.maximumOfProducts);
-        }
-    }
+MiddleMan.prototype.deliveryProducts = function (products, needProducts, director, consumer) {
+    var c = Math.min(products, needProducts);
+    if (Math.min(products, needProducts) >= 100)
+        c = 100;
+    director.setSentProduct(c);
+    consumer.setRecievedProduct(c);
+    this.sentProduct = c;
 };
 
-MiddleMan.prototype.getSentProduct=function() {
+MiddleMan.prototype.getSentProduct = function () {
     return this.sentProduct;
 }
 
