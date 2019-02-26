@@ -10,10 +10,7 @@ Product.prototype.getQuantity = function () {
 }
 
 
-var ProductMaker = function () {
-    this.quantityOfProduct;
-    this.products;
-}
+var ProductMaker = function () {}
 ProductMaker.prototype.makeProduct = function () {
     this.quantityOfProduct = Math.round(Math.random() * 100) + 50;
     this.products = new Product('Dirol', this.quantityOfProduct);
@@ -29,10 +26,7 @@ ProductMaker.prototype.getSentProduct = function () {
 };
 
 
-var Consumer = function () {
-    this.needsProduct;
-    this.recievedProduct;
-}
+var Consumer = function () {}
 Consumer.prototype.needProduct = function () {
     this.needsProduct = Math.round(Math.random() * 50) + 70;
 };
@@ -45,7 +39,6 @@ Consumer.prototype.setRecievedProduct = function (value) {
 
 var MiddleMan = function () {
     this.maximumOfProducts = 100;
-    this.sentProduct;
 }
 MiddleMan.prototype.deliveryProducts = function (products, needProducts, director, consumer) {
     var c = Math.min(products, needProducts);
