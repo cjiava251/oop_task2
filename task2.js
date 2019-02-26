@@ -43,6 +43,7 @@ class consumer {
 class middleMan {
     constructor() {
         this.maximumOfProducts = 100;
+        //this.sentProduct = 0;
     }
     delivery(products, needProducts, changeProducts, changeNeeds) {
         if (needProducts < this.maximumOfProducts) {
