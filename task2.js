@@ -1,19 +1,3 @@
-/*
-class product {
-    constructor(name, quant) {
-        this.nameOfProduct = name;
-        this.quantity = quant;
-    }
-
-    setQuantity(value) {
-        this.quantity = value;
-    }
-    getQuantity() {
-        return this.quantity;
-    }
-}
-*/
-
 var Product = function (name, quant) {
     this.name = name;
     this.quantity = quant;
@@ -63,7 +47,6 @@ var MiddleMan = function () {
     this.maximumOfProducts = 100;
     this.sentProduct;
 }
-//MiddleMan.prototype=ProductMaker;
 MiddleMan.prototype.deliveryProducts = function (products, needProducts, director, consumer) {
     var c = Math.min(products, needProducts);
     if (Math.min(products, needProducts) >= 100)
