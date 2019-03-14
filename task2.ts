@@ -1,15 +1,15 @@
 class product {
-    Name: string;
-    Quantity: number;
+    name: string;
+    quantity: number;
     constructor(name: string, quantity: number) {
-        this.Name = name;
-        this.Quantity = quantity;
+        this.name = name;
+        this.quantity = quantity;
     }
     setQuantity(value: number) {
-        this.Quantity = value;
+        this.quantity = value;
     }
     getQuantity() {
-        return this.Quantity;
+        return this.quantity;
     }
 }
 
