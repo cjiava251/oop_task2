@@ -42,8 +42,8 @@ var MiddleMan = function () {
 }
 MiddleMan.prototype.deliveryProducts = function (products, needProducts, director, consumer) {
     var c = Math.min(products, needProducts);
-    if (Math.min(products, needProducts) >= 100)
-        c = 100;
+    if (c > this.maximumOfProducts)
+        c = this.maximumOfProducts;
     director.setSentProduct(c);
     consumer.setRecievedProduct(c);
     this.sentProduct = c;
