@@ -1,7 +1,7 @@
 class product {
-    constructor(name, quant) {
+    constructor(name, quantity) {
         this.nameOfProduct = name;
-        this.quantity = quant;
+        this.quantity = quantity;
     }
 
     setQuantity(value) {
@@ -13,8 +13,8 @@ class product {
 }
 
 class productMaker {
-    makeProduct() {
-        this.quantityOfProduct = Math.round(Math.random() * 100) + 50;
+    makeProduct(min,range) {
+        this.quantityOfProduct = Math.round(Math.random() * range) + min;
         this.products = new product('Dirol', this.quantityOfProduct);
     }
     getQuantity() {
@@ -29,8 +29,8 @@ class productMaker {
 }
 
 class consumer {
-    needProduct() {
-        this.needsProduct = Math.round(Math.random() * 50) + 70;
+    needProduct(min,range) {
+        this.needsProduct = Math.round(Math.random() * range) + min;
     }
     getNeedsProduct() {
         return this.needsProduct;
@@ -97,8 +97,8 @@ var makedProductOf3Days = 0, sentProductOf3Days = 0, efficiency = 0, makedProduc
 
 console.log('Кол-во товара  Кол-во необх. товара  Кол-во доставленно товара за день  Кол-во произвед. товара за посл. 3 дня  Кол-во достав. товара за посл. 3 дня  КПД посредника ');
 for (var i = 1; i <= 10; i++) {
-    director.makeProduct();
-    buyer.needProduct();
+    director.makeProduct(50,100);
+    buyer.needProduct(70,50);
     midMan.delivery(director.getQuantity(), buyer.getNeedsProduct(), director, buyer);
     makedProduct[i] = director.products.getQuantity();
     sentProduct[i] = director.getSentProduct();
